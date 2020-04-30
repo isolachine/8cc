@@ -20,6 +20,7 @@ static void realloc_body(Buffer *b) {
     int newsize = b->nalloc * 2;
     char *body = malloc(newsize);
     memcpy(body, b->body, b->len);
+    free(b->body);
     b->body = body;
     b->nalloc = newsize;
 }
@@ -55,6 +56,8 @@ void buf_printf(Buffer *b, char *fmt, ...) {
         if (avail <= written) {
             realloc_body(b);
             continue;
+        } else {
+            free(b->body);
         }
         b->len += written;
         return;
