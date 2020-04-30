@@ -25,7 +25,9 @@ static void realloc_body(Buffer *b) {
 }
 
 char *buf_body(Buffer *b) {
-    return b->body;
+    char *body = b->body;
+    free(b);
+    return body;
 }
 
 int buf_len(Buffer *b) {
